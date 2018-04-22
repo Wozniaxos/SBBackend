@@ -22,6 +22,12 @@ class Photo(models.Model):
 
 class Event(models.Model):
     type = models.CharField(max_length=30)
+    adress = models.CharField(max_length=30)
+    date = models.DateField()
+    kind = models.CharField(max_length=30)
+    time = models.IntegerField()
+    salary = models.IntegerField()
+    special_requirements = models.CharField(max_length=300)
     def __str__(self):
         return self
 

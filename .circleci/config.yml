@@ -11,8 +11,8 @@ jobs:
       - image: circleci/python:3.6.1
       - image: circleci/postgres:9.6.2
         environment: # environment variables for database
-          POSTGRES_USER: kacperwozniak
-          POSTGRES_DB: soundbuddy
+          POSTGRES_USER: ${USER}
+          POSTGRES_DB: ${DB_NAME}
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images

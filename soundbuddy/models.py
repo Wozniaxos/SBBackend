@@ -1,39 +1,51 @@
 from django.db import models
 
 class MusicType(models.Model):
-    def __str__(self):
-        return self
-
-class EventKind(models.Model):
+    name = models.CharField(max_length=30)
     def __str__(self):
         return self
 
 class Video(models.Model):
+    url = models.CharField(max_length=30)
     def __str__(self):
         return self
 
 class Track(models.Model):
+    url = models.CharField(max_length=30)
     def __str__(self):
         return self
 
 class Photo(models.Model):
-    def __str__(self):
-        return self
-
-class Artist(models.Model):
+    url = models.CharField(max_length=30)
     def __str__(self):
         return self
 
 class Event(models.Model):
+    type = models.CharField(max_length=30)
     def __str__(self):
         return self
 
+class Instrument(models.Model):
+    name = models.CharField(max_length=30)
+    type = models.CharField(max_length=30)
+    def __str__(self):
+        return self
+
+class Artist(models.Model):
+    name = models.CharField(max_length=30)
+    city = models.CharField(max_length=30)
+    main_instrument = models.ForeignKey(Instrument)
+    instruments = models.ManyToManyField(Instrument)
+    bands = models.ManyToManyField(Band)
+
+    def __str__(self):
+        return self
 
 class Band(models.Model):
     name = models.CharField(max_length = 30)
     city = models.CharField(max_length = 30)
     available_over_sea = models.BooleanField(default = False)
-    willing_play_in_another_band = models.BooleanField(default = False)
+    willing_play_in_another_configuration = models.BooleanField(default = False)
     perform_radius = models.IntegerField()
     music_types = models.ManyToManyField(MusicType)
     minimum_hour_rate = models.IntegerField()

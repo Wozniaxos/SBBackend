@@ -48,7 +48,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            py.test
+            python manage.py test soundbuddy.tests
 
       - store_artifacts:
           path: test-reports

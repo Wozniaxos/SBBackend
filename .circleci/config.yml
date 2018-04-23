@@ -9,6 +9,13 @@ jobs:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
       - image: circleci/python:3.6.1
+        environment:
+          TEST_DATABASE_URL: postgresql://root@localhost/circle_test?sslmode=disable
+      - image: circleci/postgres:9.6.5-alpine-ram
+        environment:
+          POSTGRES_USER: kacperwozniak
+          POSTGRES_DB: circle_test
+          POSTGRES_PASSWORD: ""
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -44,11 +51,12 @@ jobs:
       # other common Python testing frameworks include pytest and nose
       # https://pytest.org
       # https://nose.readthedocs.io
+
       - run:
           name: run tests
           command: |
             . venv/bin/activate
-            py.test
+            python manage.py test soundbuddy.tests
 
       - store_artifacts:
           path: test-reports

@@ -13,7 +13,7 @@ class EventKind(models.Model):
 
 class Event(models.Model):
     type = models.CharField(max_length=30, null=True)
-    adress = models.CharField(max_length=30, null=True)
+    address = models.CharField(max_length=30, null=True)
     date = models.DateField(null=True)
     kind = models.ForeignKey(EventKind, on_delete=models.CASCADE, null=True)
     time = models.IntegerField(null=True)
@@ -27,21 +27,6 @@ class MusicType(models.Model):
     def __str__(self):
         return self
 
-class Photo(models.Model):
-    url = models.CharField(max_length=30, null=True)
-    def __str__(self):
-        return self
-
-class Track(models.Model):
-    url = models.CharField(max_length=30, null=True)
-    def __str__(self):
-        return self
-
-class Video(models.Model):
-    url = models.CharField(max_length=30, null=True)
-    def __str__(self):
-        return self
-
 class Band(models.Model):
     name = models.CharField(max_length = 30, null=True)
     city = models.CharField(max_length = 30, null=True)
@@ -51,14 +36,28 @@ class Band(models.Model):
     music_types = models.ManyToManyField(MusicType)
     minimum_hour_rate = models.IntegerField(null=True)
     preferred_events = models.ManyToManyField(EventKind)
-    videos = models.ManyToManyField(Video)
-    tracks = models.ManyToManyField(Track)
-    photos = models.ManyToManyField(Photo)
-    artists = models.ManyToManyField('Artist')
     events = models.ManyToManyField(Event)
 
     def __str__(self):
         return self.name
+
+class Photo(models.Model):
+    url = models.CharField(max_length=30, null=True)
+    band = models.ForeignKey(Band, on_delete=models.CASCADE, null=True)
+    def __str__(self):
+        return self
+
+class Track(models.Model):
+    url = models.CharField(max_length=30, null=True)
+    band = models.ForeignKey(Band, on_delete=models.CASCADE, null=True)
+    def __str__(self):
+        return self
+
+class Video(models.Model):
+    url = models.CharField(max_length=30, null=True)
+    band = models.ForeignKey(Band, on_delete=models.CASCADE, null=True)
+    def __str__(self):
+        return self
 
 class Artist(models.Model):
     name = models.CharField(max_length=30, null=True)

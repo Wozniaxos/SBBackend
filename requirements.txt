@@ -1,7 +1,9 @@
 attrs==17.4.0
+beautifulsoup4==4.6.0
 coverage==4.5.1
 Django==2.0.3
 django-environ==0.4.4
+django-webtest==1.9.2
 environ==1.0
 pluggy==0.6.0
 psycopg2==2.7.4
@@ -10,5 +12,9 @@ pytest==3.4.2
 pytest-cov==2.5.1
 pytest-cover==3.0.0
 pytest-coverage==0.0
+pytest-django==3.2.1
 pytz==2018.3
 six==1.11.0
+waitress==1.1.0
+WebOb==1.8.1
+WebTest==2.0.29

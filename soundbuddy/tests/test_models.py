@@ -1,5 +1,8 @@
 from django.test import TestCase
 from soundbuddy.models import Video, Instrument, EventKind, MusicType, Event, Photo, Track, Band, ArtistInstrument, Artist
+import django
+import pytest
+django.setup()
 
 class InstrumentTest(TestCase):
 

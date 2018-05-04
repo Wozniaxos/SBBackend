@@ -5,5 +5,10 @@ class InstrumentFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Instrument
 
-    name = 'Guitar'
-    type = 'Main'
+class EventKindFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.EventKind
+
+class EventFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Event

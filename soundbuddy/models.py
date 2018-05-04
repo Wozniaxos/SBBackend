@@ -13,7 +13,7 @@ class EventKind(models.Model):
 
 class Event(models.Model):
     type = models.CharField(max_length=30, null=True)
-    address = models.CharField(max_length=30, null=True)
+    address = models.CharField(max_length=100, null=True)
     date = models.DateField(null=True)
     kind = models.ForeignKey(EventKind, on_delete=models.CASCADE, null=True)
     time = models.IntegerField(null=True)

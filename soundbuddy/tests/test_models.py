@@ -1,5 +1,6 @@
 from django.test import TestCase
-from soundbuddy.models import Video, Instrument, EventKind, MusicType, Event, Photo, Track, Band, ArtistInstrument, Artist
+from soundbuddy.models import *
+
 
 class InstrumentTest(TestCase):
 
@@ -12,6 +13,7 @@ class InstrumentTest(TestCase):
         self.assertEqual(i.name, 'Guitar')
         self.assertEqual(i.type, 'main')
 
+
 class EventTest(TestCase):
 
     def create_event_kind(self, name='Wedding'):
@@ -22,9 +24,21 @@ class EventTest(TestCase):
         self.assertTrue(isinstance(e, EventKind))
         self.assertEqual(e.name, 'Wedding')
 
-    def create_event(self, type='private', address='street 1', time=120, salary=100, special_requirements='special requirements'):
+    def create_event(self, type='private',
+                     address='street 1',
+                     time=120,
+                     salary=100,
+                     special_requirements='special requirements'
+                     ):
         event_kind = self.create_event_kind()
-        return Event.objects.create(type=type, address=address, kind=event_kind, time=time, salary=salary, special_requirements=special_requirements)
+        return Event.objects.create(
+            type=type,
+            address=address,
+            kind=event_kind,
+            time=time,
+            salary=salary,
+            special_requirements=special_requirements
+        )
 
     def test_event_creation_with_event_kind_relation(self):
         e = self.create_event()
@@ -37,6 +51,7 @@ class EventTest(TestCase):
         self.assertEqual(e.special_requirements, 'special requirements')
         self.assertEqual(e.kind.name, 'Wedding')
 
+
 class MusicTypeTest(TestCase):
 
     def create_music_type(self, name='Jazz'):
@@ -46,6 +61,7 @@ class MusicTypeTest(TestCase):
         m = self.create_music_type()
         self.assertTrue(isinstance(m, MusicType))
         self.assertTrue(m.name, 'Jazz')
+
 
 class ExternalMedia(TestCase):
 
@@ -69,6 +85,7 @@ class ExternalMedia(TestCase):
         self.assertEqual(v.url, 'this is the url')
         self.assertEqual(t.url, 'this is the url')
         self.assertEqual(p.url, 'this is the url')
+
 
 class BandTest(TestCase):
 
@@ -95,16 +112,21 @@ class BandTest(TestCase):
         self.assertTrue(isinstance(b, Band))
         self.assertTrue(b.music_types.count, 2)
         self.assertTrue(b.preferred_events.count, 2)
-        self.assertTrue(b.preferred_events.all()[0].band_set.all()[0].name, 'weselnicy')
-        self.assertTrue(b.preferred_events.all()[1].band_set.all()[0].name, 'weselnicy')
-        self.assertTrue(b.music_types.all()[0].band_set.all()[0].name, 'weselnicy')
-        self.assertTrue(b.music_types.all()[1].band_set.all()[0].name, 'weselnicy')
+        self.assertTrue(b.preferred_events.all()[0]
+                        .band_set.all()[0].name, 'weselnicy')
+        self.assertTrue(b.preferred_events.all()[1]
+                        .band_set.all()[0].name, 'weselnicy')
+        self.assertTrue(b.music_types.all()[0]
+                        .band_set.all()[0].name, 'weselnicy')
+        self.assertTrue(b.music_types.all()[1]
+                        .band_set.all()[0].name, 'weselnicy')
         self.assertTrue(b.photo_set.all()[0].url, 'photo1url')
         self.assertTrue(b.photo_set.all()[1].url, 'photo2url')
         self.assertTrue(b.track_set.all()[0].url, 'track1url')
         self.assertTrue(b.track_set.all()[1].url, 'track2url')
         self.assertTrue(b.video_set.all()[0].url, 'video1url')
         self.assertTrue(b.video_set.all()[1].url, 'video2url')
+
 
 class ArtistTest(TestCase):
 
@@ -114,8 +136,8 @@ class ArtistTest(TestCase):
         band_2 = Band.objects.create(name='band2')
         artist.bands.add(band_1)
         artist.bands.add(band_2)
-        instrument_1=Instrument.objects.create(name='Guitar')
-        instrument_2=Instrument.objects.create(name='Piano')
+        instrument_1 = Instrument.objects.create(name='Guitar')
+        instrument_2 = Instrument.objects.create(name='Piano')
         ArtistInstrument.objects.create(artist=artist, instrument=instrument_1)
         ArtistInstrument.objects.create(artist=artist, instrument=instrument_2)
         return artist
@@ -127,18 +149,22 @@ class ArtistTest(TestCase):
         self.assertTrue(a.name, 'Kacper')
         self.assertTrue(a.city, 'city')
         self.assertTrue(a.artistinstrument_set.count, 2)
-        self.assertTrue(a.artistinstrument_set.all()[0].instrument.name, 'Guitar')
-        self.assertTrue(a.artistinstrument_set.all()[1].instrument.name, 'Piano')
+        self.assertTrue(a.artistinstrument_set.all()[0]
+                        .instrument.name, 'Guitar')
+        self.assertTrue(a.artistinstrument_set.all()[1]
+                        .instrument.name, 'Piano')
         self.assertTrue(a.bands.all()[0].name, 'band1')
         self.assertTrue(a.bands.all()[1].name, 'band2')
 
-class ArtistInstrumentTest(TestCase):
 
+class ArtistInstrumentTest(TestCase):
 
     def create_artist_instrument(self):
         artist = Artist.objects.create(name='Kacper')
         instrument = Instrument.objects.create(name='Guitar')
-        return ArtistInstrument.objects.create(artist=artist, instrument=instrument)
+        return ArtistInstrument.objects.create(artist=artist,
+                                               instrument=instrument
+                                               )
 
     def test_artist_instrument_creation_with_relations(self):
         a = self.create_artist_instrument()
